@@ -1,3 +1,4 @@
+from Models.heads.Lstm import Lstm
 import pytorch_lightning as pl
 from einops import rearrange
 from Models.heads.NaiveHead import NaiveHead
@@ -18,6 +19,8 @@ class LitHead(pl.LightningModule) :
             return NaiveHead(input_feats)
         elif head == 'Gru':
             return Gru(input_feats)
+        elif head == 'Lstm':
+            return Lstm(input_feats)
         elif head == 'ConvPooling':
             return ConvPooling(input_feats)
         else :
@@ -42,5 +45,5 @@ class LitHead(pl.LightningModule) :
     @staticmethod
     def add_specific_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
-        parser.add_argument('--head', '-he', type=str, choices=['NaiveHead', 'Gru', 'ConvPooling'], default='Gru')
+        parser.add_argument('--head', '-he', type=str, choices=['NaiveHead', 'Gru', 'ConvPooling','Lstm'], default='ConvPooling')
         return parser

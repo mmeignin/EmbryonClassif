@@ -8,7 +8,7 @@ class TransformsComposer():
     """
     Compose and setup the transforms depending command line arguments.
     Define a series of transforms, each transform takes a dictionnary
-    containing a subset of keys from ['Flow', 'Image', 'GtMask'] and
+    containing a subset of keys from [ 'Video'] and
     has to return the same dictionnary with content elements transformed.
     """
     def __init__(self, augmentation) :
@@ -36,7 +36,8 @@ class TrAugmentVideo() :
     """
     def __init__(self, augmentation) :
         self.augs = []
-        augs_names =  augmentation.split('_')
+        augs_names =  augmentation
+        print("Augmentation:", augmentation)
         for name in augs_names :
             self.interpret_name(name)
         self.declare()
@@ -44,12 +45,14 @@ class TrAugmentVideo() :
     def interpret_name(self, name) :
         if 'randombrightness' == name :
             self.augs.append(self.randombrightness)
-        if 'hflip' == name :
+        elif 'hflip' == name :
             self.augs.append(self.hflip)
+        elif 'vflip' == name :
+            self.augs.append(self.vflip)  
         elif (name == 'none') or (name=='') :
             pass
         else :
-            raise Exception(f'Flow augmentation {name} is unknown')
+            raise Exception(f'Video augmentation {name} is unknown')
 
     def __call__(self, ret) :
         """
@@ -60,19 +63,19 @@ class TrAugmentVideo() :
         return ret
 
     def declare(self):
-         print(f'Flow Transformations : {[aug for aug in self.augs]}')
+         print(f'Video Transformations : {[aug for aug in self.augs]}')
 
     @staticmethod
     def randombrightness(ret) :
         """
-        Apply a random brightness adjust to all vectors of the flow fields
+        Apply a random brightness adjustment to all the video
         Args :
           ret : dictionnary containing at least "Video"
         Return :
-          ret dictionnary with Flow transform for one frame
+          ret dictionnary containg video with adjusted brightness
               'Flow' : (Nframes, Channels ,W, H)
         """
-        fct = torch.randn(1) + 1
+        fct = torch.rand(1) + 1
         ret['Video'] += 0.5
         ret['Video'] = transforms.functional.adjust_brightness(ret['Video'], fct)
         ret['Video'] -= 0.5
@@ -85,14 +88,30 @@ class TrAugmentVideo() :
         Args :
           ret : dictionnary containing at least "Video"
         Return :
-          ret dictionnary with Flow transform for one frame
-              'Flow' : (Nframes, Channels ,W, H)
+          ret dictionnary with Video horizontally flipped the same way for all images
+              'Video' : (Nframes, Channels ,W, H)
         """
-        ret['Video'] = transforms.functional.hflip(ret['Video'])
+        hflipper = transforms.RandomHorizontalFlip(p=0.5)
+        ret['Video'] = hflipper(ret['Video'])
+        return ret
+
+    @staticmethod
+    def vflip(ret) :
+        """
+        Vertical Flip
+        Args :
+          ret : dictionnary containing at least "Video"
+        Return :
+          ret dictionnary with Video vertically flipped the same way for all images
+              'Video' : (Nframes, Channels ,W, H)
+        """
+        vflipper = transforms.RandomVerticalFlip(p=0.5)
+        ret['Video'] = vflipper(ret['Video'])
         return ret
 
     @staticmethod
     def add_specific_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
-        parser.add_argument('--augmentation', type=str, default='none')
+        parser.add_argument('--augmentation',type=str,nargs='+', default='none')
+
         return parser
