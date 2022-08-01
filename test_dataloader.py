@@ -8,7 +8,7 @@ from visualisation import displayvideo
 hflipper = transforms.RandomHorizontalFlip(p=0.5)
 vflipper = transforms.RandomVerticalFlip(p=0.5)
 
-dm = CsvDataModule(data_path='DataSplit/Embryon_RandomSplit_{}.csv', base_dir=os.environ['PWD'], batch_size=1, request=['Image', 'Class'], img_size=[256,256], augmentation=['hflip','randombrightness'], framestep=1)
+dm = CsvDataModule(data_path='DataSplit/Embryon_RandomSplit_{}.csv', base_dir=os.environ['PWD'], batch_size=1, request=['Image', 'Class'], img_size=[256,256], augmentation='', framestep=1)
 
 dm.setup('fit')
 
@@ -29,8 +29,8 @@ fig1=displayvideo(ret,5)
 
 
 
-ret['Video']=hflipper(ret['Video'])
-
+#ret['Video']=hflip(ret['Video'])
+ret['Video']= transforms.functional.vflip(ret['Video'])
 fig2=displayvideo(ret,5)
 
 
