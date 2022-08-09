@@ -8,6 +8,10 @@ from glob import glob
 from natsort import natsorted
 import numpy as np
 
+
+NBClass=8
+
+
 def r(x, w=240, h=240) :
     x = torch.tensor(x)
     x = x.permute(2, 0, 1)[None]

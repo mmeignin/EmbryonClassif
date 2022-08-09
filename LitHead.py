@@ -4,8 +4,6 @@ from einops import rearrange
 from Models.heads.NaiveHead import NaiveHead
 from Models.heads.Gru import Gru
 from Models.heads.ConvPooling import ConvPooling
-
-
 from argparse import ArgumentParser
 
 class LitHead(pl.LightningModule) :
@@ -41,9 +39,10 @@ class LitHead(pl.LightningModule) :
         output = self.model(input) # ( Nvideos, 8)
         return output
 
-
     @staticmethod
     def add_specific_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
         parser.add_argument('--head', '-he', type=str, choices=['NaiveHead', 'Gru', 'ConvPooling','Lstm'], default='ConvPooling')
         return parser
+
+

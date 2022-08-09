@@ -6,7 +6,6 @@ from torchvision import models
 class ResNet18(nn.Module):
     def __init__(self, pretrained_backbone=True, **kwargs):
         super().__init__()
-
         m = models.resnet18(pretrained=pretrained_backbone)
         print(f'Using pretraining : {pretrained_backbone}')
         self.out_features = m.fc.in_features
@@ -22,7 +21,6 @@ class ResNet18(nn.Module):
         Returns
         -------
         features : tensor (B, C*W*H)
-
 
         """
         x=self.feature_extractor(x)

@@ -11,3 +11,6 @@ pytorch_lightning==1.6.5
 torch==1.12.0
 torchvision==0.13.0
 wandb==0.12.21
+scikit-learn==1.1.1
+scipy==1.9.01
+opencv-python==4.6.0.66

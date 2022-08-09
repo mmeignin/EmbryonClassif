@@ -37,9 +37,11 @@ class TrAugmentVideo() :
     def __init__(self, augmentation) :
         self.augs = []
         augs_names =  augmentation
-        print("Augmentation:", augmentation)
-        for name in augs_names :
-            self.interpret_name(name)
+        if (augmentation =='none') or (augmentation ==''):
+            pass
+        else : 
+            for name in augs_names :
+                self.interpret_name(name)
         self.declare()
 
     def interpret_name(self, name) :
@@ -48,7 +50,9 @@ class TrAugmentVideo() :
         elif 'hflip' == name :
             self.augs.append(self.hflip)
         elif 'vflip' == name :
-            self.augs.append(self.vflip)  
+            self.augs.append(self.vflip)
+        elif 'fill_background' == name :
+            self.augs.append(self.fill_background) 
         elif (name == 'none') or (name=='') :
             pass
         else :
@@ -59,7 +63,7 @@ class TrAugmentVideo() :
         Call all augmentations defined in the init
         """
         for aug in self.augs :
-            ret = aug(ret)
+            ret=aug(ret)
         return ret
 
     def declare(self):
@@ -91,7 +95,7 @@ class TrAugmentVideo() :
           ret dictionnary with Video horizontally flipped the same way for all images
               'Video' : (Nframes, Channels ,W, H)
         """
-        hflipper = transforms.RandomHorizontalFlip(p=0.5)
+        hflipper = transforms.RandomHorizontalFlip(p=0.75)
         ret['Video'] = hflipper(ret['Video'])
         return ret
 
@@ -105,9 +109,29 @@ class TrAugmentVideo() :
           ret dictionnary with Video vertically flipped the same way for all images
               'Video' : (Nframes, Channels ,W, H)
         """
-        vflipper = transforms.RandomVerticalFlip(p=0.5)
+        vflipper = transforms.RandomVerticalFlip(p=0.75)
         ret['Video'] = vflipper(ret['Video'])
         return ret
+
+    @staticmethod
+    def fill_background(ret) :
+        """
+        fill the background of segmented images with random values
+        Args :
+          ret : dictionnary containing at least "Video"
+        Return :
+          ret dictionnary with randomized background the same way for all images
+              'Video' : (Nframes, Channels ,W, H)
+        """
+        for i in range(ret['Video'].shape[0]):
+            if ret['Video'][i,0,:,:][ret['Video'][i,0,:,:] == - 0.5].any() and ret['Video'][i,1,:,:][ret['Video'][i,1,:,:] == - 0.5].any() and ret['Video'][i,2,:,:][ret['Video'][i,2,:,:] == - 0.5].any() :
+                fct=torch.rand(ret['Video'][i,0,:,:][ret['Video'][i,0,:,:] == - 0.5].shape[0]) -0.5
+                ret['Video'][i,0,:,:][ret['Video'][i,0,:,:] == - 0.5] = fct 
+                ret['Video'][i,1,:,:][ret['Video'][i,1,:,:] == - 0.5] = fct 
+                ret['Video'][i,2,:,:][ret['Video'][i,2,:,:] == - 0.5] = fct 
+        return ret
+
+    
 
     @staticmethod
     def add_specific_args(parent_parser):

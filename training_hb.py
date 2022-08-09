@@ -49,7 +49,6 @@ mck = pl.callbacks.ModelCheckpoint(path_save_model+'/checkpoints/',
                                    mode='min',
                                    save_top_k=3)
 
-
 args.callbacks = [ResultsLogger(), mck]
 trainer = pl.Trainer.from_argparse_args(args)
 trainer.logger.log_hyperparams(args)

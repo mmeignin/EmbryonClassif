@@ -21,7 +21,6 @@ class LitBackbone(pl.LightningModule) :
 
     def forward(self, batch) :
         """Compute feature for each input frame.
-
         Parameters
         ----------
         batch : Dict containing

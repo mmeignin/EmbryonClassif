@@ -4,6 +4,7 @@ import pandas as pd
 import cv2
 import matplotlib.pyplot as plt
 
+
 def displayvideo(ret,nb_displayed=1,fig_size=(18,4)):
 
     if nb_displayed > ret['Video'].shape[1] :
