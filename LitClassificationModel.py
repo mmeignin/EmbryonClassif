@@ -8,7 +8,7 @@ from argparse import ArgumentParser
 import wandb
 from csvflowdatamodule.utils import NBClass
 
-#from losses.WeightedClassificationError import WeightedClassificationError
+from losses.WeightedClassificationError import WeightedClassificationError
 """
 	A LightningModule organizes your PyTorch code into 6 sections:
 	-Computations (init).
@@ -27,7 +27,7 @@ class LitClassificationModel(pl.LightningModule) :
         self.criterion_name = criterion_name
         
     def configure_optimizers(self):
-        optimizer = torch.optim.Adam(self.parameters(), lr=1e-4)
+        optimizer = torch.optim.Adam(self.parameters(), lr=1e-3)
         print(f'Optimizer : {optimizer}')
         return optimizer
 
@@ -50,13 +50,17 @@ class LitClassificationModel(pl.LightningModule) :
                 class_weight = torch.tensor([1.21875,1.17672414,1.1375,1.625,1.1375,0.875,0.89802632,0.58836207]).to(batch['Class'].device)
             elif NBClass == 2 :
                 class_weight = torch.tensor([0.77118644,1.421875]).to(batch['Class'].device)
+                #class_weight = torch.tensor(1.2967032978432556, 0.7032967032967034).to(batch['Class'].device)
             else :
                 pass
             losses = nn.functional.cross_entropy(batch['Pred'], batch['Class'], reduction='none', weight=class_weight)
         if self.criterion_name == 'custom_loss':
-            print("not done yet")
-            #wce = WeightedClassificationError()
-            #losses = wce.compute(batch['Class'],batch['Pred'],batch['Class'].device)
+            if NBClass == 8 :
+                print("not working for now")
+                #wce = WeightedClassificationError()
+                #losses = wce.compute(batch['Class'],batch['Pred'],batch['Class'].device)
+            else :
+                pass
         return {'losses' : losses}
 
     def Evaluations(self, batch, evals) :
@@ -70,7 +74,10 @@ class LitClassificationModel(pl.LightningModule) :
         evals['preds'] =  a
         evals['accs'] = (a == batch['Class']).to(torch.float)
         evals['Class'] =  batch['Class']
-        for i in range(8) :
+        if NBClass ==8 :
+            wce = WeightedClassificationError()
+            evals['WCE'] = wce.compute(batch['Class'],batch['Pred'],batch['Class'].device)
+        for i in range(NBClass) :
             evals[f'preds_{i}'] = (a == i).to(torch.float)
       
     def Logging(self, evals, step_label) :
@@ -108,5 +115,5 @@ class LitClassificationModel(pl.LightningModule) :
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
         parser = LitBackbone.add_specific_args(parser)
         parser = LitHead.add_specific_args(parser)
-        parser.add_argument('--criterion_name', type=str, choices=['bce', 'bce_balanced','custom_loss'], default='bce_balanced')
+        parser.add_argument('--criterion_name', type=str, choices=['bce', 'bce_balanced'], default='bce')
         return parser

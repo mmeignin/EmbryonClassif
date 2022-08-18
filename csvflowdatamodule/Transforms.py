@@ -95,7 +95,7 @@ class TrAugmentVideo() :
           ret dictionnary with Video horizontally flipped the same way for all images
               'Video' : (Nframes, Channels ,W, H)
         """
-        hflipper = transforms.RandomHorizontalFlip(p=0.75)
+        hflipper = transforms.RandomHorizontalFlip(p=0.5)
         ret['Video'] = hflipper(ret['Video'])
         return ret
 
@@ -109,7 +109,7 @@ class TrAugmentVideo() :
           ret dictionnary with Video vertically flipped the same way for all images
               'Video' : (Nframes, Channels ,W, H)
         """
-        vflipper = transforms.RandomVerticalFlip(p=0.75)
+        vflipper = transforms.RandomVerticalFlip(p=0.5)
         ret['Video'] = vflipper(ret['Video'])
         return ret
 
