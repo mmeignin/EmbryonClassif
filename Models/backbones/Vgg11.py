@@ -3,12 +3,12 @@ import torch.nn.functional as F
 from torchvision import models
 
 
-class ResNet18(nn.Module):
+class Vgg11(nn.Module):
     def __init__(self, pretrained_backbone=False, **kwargs):
         super().__init__()
-        m = models.resnet18(pretrained=pretrained_backbone)
+        m = models.vgg11(pretrained=pretrained_backbone)
         print(f'Using pretraining : {pretrained_backbone}')
-        self.out_features = m.fc.in_features
+        self.out_features = m.classifier[0].in_features
         self.feature_extractor = nn.Sequential(*list(m.children())[:-1])
 
     def forward(self, x):

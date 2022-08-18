@@ -3,10 +3,10 @@ import torch.nn.functional as F
 from torchvision import models
 
 
-class ResNet18(nn.Module):
+class ResNet34(nn.Module):
     def __init__(self, pretrained_backbone=False, **kwargs):
         super().__init__()
-        m = models.resnet18(pretrained=pretrained_backbone)
+        m = models.resnet34(pretrained=pretrained_backbone)
         print(f'Using pretraining : {pretrained_backbone}')
         self.out_features = m.fc.in_features
         self.feature_extractor = nn.Sequential(*list(m.children())[:-1])

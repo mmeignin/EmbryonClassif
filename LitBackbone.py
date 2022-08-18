@@ -2,6 +2,9 @@ import pytorch_lightning as pl
 from einops import rearrange
 from Models.backbones.SimpleConv import SimpleConv
 from Models.backbones.ResNet18 import ResNet18
+from Models.backbones.ResNet34 import ResNet34
+from Models.backbones.Vgg11 import Vgg11
+from Models.backbones.Vit import Vit
 
 from argparse import ArgumentParser
 
@@ -16,6 +19,12 @@ class LitBackbone(pl.LightningModule) :
             return SimpleConv()
         elif backbone == 'ResNet18':
             return ResNet18(**kwargs)
+        elif backbone == 'ResNet34':
+            return ResNet34(**kwargs)
+        elif backbone == 'Vgg11':
+            return Vgg11(**kwargs)
+        elif backbone == 'Vit' :
+            return Vit(**kwargs)
         else :
             print(f'Backbone {backbone} not available')
 
@@ -39,7 +48,7 @@ class LitBackbone(pl.LightningModule) :
     @staticmethod
     def add_specific_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
-        parser.add_argument('--backbone', '-bb', type=str, choices=['SimpleConv', 'ResNet18'], default='ResNet18')
+        parser.add_argument('--backbone', '-bb', type=str, choices=['SimpleConv', 'ResNet18', 'ResNet34', 'Vgg11','Vit'], default='ResNet18')
         parser.add_argument('--pretrained_backbone', '-pb', action='store_true', help='Use pretrained backbone')
         return parser
 

@@ -3,13 +3,13 @@ import torch.nn.functional as F
 from torchvision import models
 
 
-class ResNet18(nn.Module):
+class Vit(nn.Module):
     def __init__(self, pretrained_backbone=False, **kwargs):
         super().__init__()
-        m = models.resnet18(pretrained=pretrained_backbone)
+        m = models.vit_b_16(pretrained=pretrained_backbone)
         print(f'Using pretraining : {pretrained_backbone}')
-        self.out_features = m.fc.in_features
-        self.feature_extractor = nn.Sequential(*list(m.children())[:-1])
+        self.out_features = m.heads.head.out_features
+        self.feature_extractor = m
 
     def forward(self, x):
         """Extract features from image
@@ -21,6 +21,7 @@ class ResNet18(nn.Module):
         Returns
         -------
         features : tensor (B, C*W*H)
+        classification is done for this transformer module
 
         """
         x=self.feature_extractor(x)
