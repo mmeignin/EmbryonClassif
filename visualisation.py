@@ -11,7 +11,7 @@ def displayvideo(ret,nb_displayed=1,fig_size=(18,4)):
         print("Impossible display, size format incorrect")
     else :
         fig, axs = plt.subplots(1,nb_displayed,figsize=fig_size)
-        fig.suptitle(ret['VideoName'])
+        fig.suptitle("Video number:"+str(ret['VideoName'])+" Video Class: "+str(ret['Class'].item()))
 
         #Constant frame display rate
         frame_step = int(ret['Video'].shape[1] / nb_displayed)
