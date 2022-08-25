@@ -11,11 +11,12 @@ from argparse import ArgumentParser
 
 
 class LitBackbone(pl.LightningModule) :
-    def __init__(self, backbone,embedding=False,**kwargs) :
+    def __init__(self, backbone,embedding=True,**kwargs) :
         super().__init__()
         self.model = self.init_model(backbone, **kwargs)
-        self.embedding = embedding
-        print(f'Using pretraining : {self.embedding}')
+        self.embedding = False
+        print(f'Using embedding : {self.embedding}')
+
 
     def init_model(self, backbone, **kwargs) :
         if backbone == 'SimpleConv' :
@@ -61,7 +62,7 @@ class LitBackbone(pl.LightningModule) :
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
         parser.add_argument('--backbone', '-bb', type=str, choices=['SimpleConv', 'ResNet18', 'ResNet34', 'Vgg11','Vit'], default='ResNet18')
         parser.add_argument('--pretrained_backbone', '-pb', action='store_true', help='Use pretrained backbone')
-        parser.add_argument('--embedding', "-emb", action='store_true', help='Use temporal embedding before heads')
+        parser.add_argument('--embedding', "-emb", action='store_true',default=False, help='Use temporal embedding before heads')
         return parser
 
     def get_output_feats(self, img_size) :
