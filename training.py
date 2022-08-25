@@ -1,4 +1,4 @@
-from LitVideoClassifModel import LitVideoClassifModel
+from LitClassificationModel import LitClassificationModel
 from csvflowdatamodule.CsvDataset import CsvDataModule
 import os
 import pytorch_lightning as pl
@@ -11,23 +11,23 @@ from Callbacks import ResultsLogger
 
 parser = ArgumentParser()
 parser = pl.Trainer.add_argparse_args(parser)
-parser = LitVideoClassifModel.add_specific_args(parser)
+parser = LitClassificationModel.add_specific_args(parser)
 parser = CsvDataModule.add_specific_args(parser)
 args = parser.parse_args()
 args.gpus = -1 if torch.cuda.is_available() else 0
 
-model = LitVideoClassifModel(**vars(args))
+model = LitClassificationModel(**vars(args))
 
 args.data_path  = f'DataSplit/{args.data_file}_'+'{}.csv'
 args.base_dir=os.environ['PWD']
-dm = CsvDataModule(request=['Image', 'Class'], **vars(args))
+dm = CsvDataModule(request=['Image', 'Class','t0'], **vars(args))
 
 # ------------
 # logger and callbacks
 # ------------
 
-args.save_dir = os.path.join(os.environ['PWD'], 'Models/EmbryonClassif/')
-print(args.save_dir)
+
+args.save_dir = os.path.join(os.environ['PWD'], 'Build/Models/EmbryonClassif/')
 args.logger = WandbLogger(project='embryon_classif',
                           save_dir=args.save_dir,
                           log_model=False)
@@ -49,9 +49,10 @@ mck = pl.callbacks.ModelCheckpoint(path_save_model+'/checkpoints/',
                                    mode='min',
                                    save_top_k=3)
 
-
 args.callbacks = [ResultsLogger(), mck]
 trainer = pl.Trainer.from_argparse_args(args)
 trainer.logger.log_hyperparams(args)
 
 trainer.fit(model, dm)
+
+

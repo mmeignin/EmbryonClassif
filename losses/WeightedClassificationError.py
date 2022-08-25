@@ -27,9 +27,9 @@ class WeightedClassificationError(torch.nn.Module):
     ):
         self.precision = precision
 
-    def compute(self, y_true, y_pred,device):
+    def compute(self, y_pred,y_true,device):
         confmat = ConfusionMatrix(num_classes=8).to(device)
-        loss = torch.sum(torch.multiply(confmat(y_pred,y_true),self.W))/ (self.n_classes * self.Wmax)
+        loss = torch.sum(torch.multiply(confmat(y_pred,y_true),self.W.to(device)))/ (self.n_classes * self.Wmax)
         return loss
 
     def __call__(self, y_true, y_pred,device):

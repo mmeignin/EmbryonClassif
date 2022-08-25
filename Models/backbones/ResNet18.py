@@ -4,7 +4,7 @@ from torchvision import models
 
 
 class ResNet18(nn.Module):
-    def __init__(self, pretrained_backbone=False, **kwargs):
+    def __init__(self, pretrained_backbone=True, **kwargs):
         super().__init__()
         m = models.resnet18(pretrained=pretrained_backbone)
         print(f'Using pretraining : {pretrained_backbone}')

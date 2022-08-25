@@ -14,17 +14,16 @@ pythonEnv="${app}classif/"
 
 
 ##install requiremennts for the training
-
 if [ ${VIRTUAL_ENV:(-7)} == "classif" ]; then 
         #pip install -r "$(pwd)/requirements.txt"
         cd ..
-        python3 training_hb.py  \
-                                --data_file EmbryonBinaryRaw_RandomSplit\
+        python3 training.py  \
+                                --data_file Embryon_RawAndSegmented_RandomSplit\
+                                -bb ResNet18 -he Gru\
                                 --criterion_name bce_balanced\
-                                -bb SimpleConv -he ConvPooling\
-                                #--augmentation randombrightness \
-                                #--preload_cache #\
-                                #-pb
+                                --framestep 2\
+                                --preload_cache\
+                                -pb
                                 
 else 
         echo "Virtual Environment issue, env name: ${$VIRTUAL_ENV}"
