@@ -1,0 +1,4 @@
+,epoch,step_label,file_name,losses,accs,preds,Class
+0,0,val,134,1.683,0.0,4.0,7.0
+1,0,val,156,1.719,0.0,4.0,7.0
+2,0,val,91,1.651,0.0,4.0,5.0
