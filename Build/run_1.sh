@@ -1,29 +1,24 @@
 #!/bin/bash
 
-
-
 #SBATCH --mem=7G
 #SBATCH --cpus-per-task=6
 
 #SBATCH -w figuier
 
-
 app="$(pwd)/../"
 pythonEnv="${app}classif/"
 . ${pythonEnv}"bin/activate"
-
 
 ##install requiremennts for the training
 if [ ${VIRTUAL_ENV:(-7)} == "classif" ]; then 
         #pip install -r "$(pwd)/requirements.txt"
         cd ..
         python3 training.py  \
-                                --data_file transferable\
+                                --data_file Embryon_RandomSplit\
                                 -bb ResNet18 -he Gru\
                                 --criterion_name bce\
                                 --augmentation hflip vflip randombrightness \
                                 --framestep 2\
-                                -emb\
                                 --preload_cache\
                                 -pb
                                 
