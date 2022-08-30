@@ -27,8 +27,8 @@ dm = CsvDataModule(request=['Image', 'Class','t0'], **vars(args))
 # ------------
 
 
-args.save_dir = os.path.join(os.environ['PWD'], 'Build/Models/EmbryonClassif/')
-args.logger = WandbLogger(project='embryon_classif',
+args.save_dir = os.path.join(os.environ['PWD'], 'results/')
+args.logger = WandbLogger(project='EmbryonClassif_on_serv',
                           save_dir=args.save_dir,
                           log_model=False)
 model.hparams.project_name = args.logger.experiment.project_name()
@@ -50,9 +50,11 @@ mck = pl.callbacks.ModelCheckpoint(path_save_model+'/checkpoints/',
                                    save_top_k=3)
 
 args.callbacks = [ResultsLogger(), mck]
+args.max_epochs = 120
 trainer = pl.Trainer.from_argparse_args(args)
 trainer.logger.log_hyperparams(args)
 
 trainer.fit(model, dm)
+trainer.test(model,dm)
 
 
