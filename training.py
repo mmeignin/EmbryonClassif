@@ -18,7 +18,7 @@ args.gpus = -1 if torch.cuda.is_available() else 0
 
 model = LitClassificationModel(**vars(args))
 
-args.data_path  = f'DataSplit/{args.data_file}_'+'{}.csv'
+args.data_path  = f'NewDataSplits/{args.data_file}_'+'{}.csv'
 args.base_dir=os.environ['PWD']
 dm = CsvDataModule(request=['Image', 'Class','t0'], **vars(args))
 
