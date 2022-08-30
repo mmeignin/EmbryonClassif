@@ -11,10 +11,10 @@ from argparse import ArgumentParser
 
 
 class LitBackbone(pl.LightningModule) :
-    def __init__(self, backbone,embedding=True,**kwargs) :
+    def __init__(self, backbone,embedding,**kwargs) :
         super().__init__()
         self.model = self.init_model(backbone, **kwargs)
-        self.embedding = False
+        self.embedding = embedding
         print(f'Using embedding : {self.embedding}')
 
 
@@ -48,10 +48,10 @@ class LitBackbone(pl.LightningModule) :
         input =  rearrange(batch['Video'], 'b f c w h -> (b f) c w h') # (Nvideos*NFrames, channels, w, h)
         features = self.model(input.to(batch['Class'].device)  ) # (Nvideos*NFrames, Nfeats)
         vid_feats = rearrange(features, ' (b f) s -> b f s', b=b , f=f) 
-        if self.embedding :
+        if self.embedding ='True' :
             b_size,frames = batch['t0'].shape
             for i in range(0,frames):
-                batch['t0'][:,i] = batch['t0'][:,0]*i / frames
+                batch['t0'][:,i] = batch['t0'][:,0]+0.15*i* 300/frames # changer pas coder en dur dans la boucle
             output = (vid_feats + batch['t0'].reshape(b_size,frames,1).to(torch.float))
         else :
             output = vid_feats
@@ -62,7 +62,7 @@ class LitBackbone(pl.LightningModule) :
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
         parser.add_argument('--backbone', '-bb', type=str, choices=['SimpleConv', 'ResNet18', 'ResNet34', 'Vgg11','Vit'], default='ResNet18')
         parser.add_argument('--pretrained_backbone', '-pb', action='store_true', help='Use pretrained backbone')
-        parser.add_argument('--embedding', "-emb", action='store_true',default=False, help='Use temporal embedding before heads')
+        parser.add_argument('--embedding', "-emb", type=str ,choices =['True','False'],default ='False')
         return parser
 
     def get_output_feats(self, img_size) :
