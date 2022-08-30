@@ -37,17 +37,14 @@ class TrAugmentVideo() :
     def __init__(self, augmentation) :
         self.augs = []
         augs_names =  augmentation
-<<<<<<< HEAD
         if (augmentation =='none') or (augmentation ==''):
             pass
         else : 
             for name in augs_names :
                 self.interpret_name(name)
-=======
         print("Augmentation:", augmentation)
         for name in augs_names :
             self.interpret_name(name)
->>>>>>> c5b426a3415e5d68823f62d2649f8da31a66a0e4
         self.declare()
 
     def interpret_name(self, name) :
@@ -56,13 +53,9 @@ class TrAugmentVideo() :
         elif 'hflip' == name :
             self.augs.append(self.hflip)
         elif 'vflip' == name :
-<<<<<<< HEAD
             self.augs.append(self.vflip)
         elif 'fill_background' == name :
             self.augs.append(self.fill_background) 
-=======
-            self.augs.append(self.vflip)  
->>>>>>> c5b426a3415e5d68823f62d2649f8da31a66a0e4
         elif (name == 'none') or (name=='') :
             pass
         else :
@@ -111,7 +104,7 @@ class TrAugmentVideo() :
 
     @staticmethod
     def vflip(ret) :
-<<<<<<< HEAD
+
         """
         Vertical Flip
         Args :
@@ -120,16 +113,6 @@ class TrAugmentVideo() :
           ret dictionnary with Video vertically flipped the same way for all images
               'Video' : (Nframes, Channels ,W, H)
         """
-=======
-        """
-        Vertical Flip
-        Args :
-          ret : dictionnary containing at least "Video"
-        Return :
-          ret dictionnary with Video vertically flipped the same way for all images
-              'Video' : (Nframes, Channels ,W, H)
-        """
->>>>>>> c5b426a3415e5d68823f62d2649f8da31a66a0e4
         vflipper = transforms.RandomVerticalFlip(p=0.5)
         ret['Video'] = vflipper(ret['Video'])
         return ret
