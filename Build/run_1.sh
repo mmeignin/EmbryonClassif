@@ -17,7 +17,7 @@ if [ ${VIRTUAL_ENV:(-7)} == "classif" ]; then
                                 --data_file EmbryonBinary_RandomSplit\
                                 -bb ResNet18 -he Gru\
                                 --criterion_name bce_balanced\
-                                --augmentation hflip vflip randombrightness \
+                                --augmentation hflip vflip randombrightness fill_background\
                                 --framestep 2\
                                 --preload_cache\
                                 -pb
