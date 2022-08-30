@@ -49,7 +49,7 @@ class LitClassificationModel(pl.LightningModule) :
             if NBClass == 8 :
                 class_weight = torch.tensor([1.21875,1.17672414,1.1375,1.625,1.1375,0.875,0.89802632,0.58836207]).to(batch['Class'].device)
             elif NBClass == 2 :
-                class_weight = torch.tensor([0.77118644,1.421875]).to(batch['Class'].device)
+                class_weight = torch.tensor([0.77118644, 1.421875]).to(batch['Class'].device)
                 #class_weight = torch.tensor([1.2967032978432556, 0.7032967032967034]).to(batch['Class'].device)
             else :
                 pass
