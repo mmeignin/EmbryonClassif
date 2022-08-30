@@ -18,10 +18,10 @@ if [ ${VIRTUAL_ENV:(-7)} == "classif" ]; then
         #pip install -r "$(pwd)/requirements.txt"
         cd ..
         python3 training.py  \
-                                --data_file Embryon_RandomSplit\
+                                --data_file transferable\
                                 -bb ResNet18 -he Gru\
-                                --criterion_name bce_balanced\
-                                --augmentation hflip vflip randombrightness fill_background\
+                                --criterion_name bce\
+                                --augmentation hflip vflip randombrightness \
                                 --framestep 2\
                                 -emb\
                                 --preload_cache\
