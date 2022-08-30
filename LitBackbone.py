@@ -14,7 +14,7 @@ class LitBackbone(pl.LightningModule) :
     def __init__(self, backbone,embedding,**kwargs) :
         super().__init__()
         self.model = self.init_model(backbone, **kwargs)
-        self.embedding = embedding
+        self.embedding = False
         print(f'Using embedding : {self.embedding}')
 
 
@@ -48,7 +48,7 @@ class LitBackbone(pl.LightningModule) :
         input =  rearrange(batch['Video'], 'b f c w h -> (b f) c w h') # (Nvideos*NFrames, channels, w, h)
         features = self.model(input.to(batch['Class'].device)  ) # (Nvideos*NFrames, Nfeats)
         vid_feats = rearrange(features, ' (b f) s -> b f s', b=b , f=f) 
-        if self.embedding ='True' :
+        if self.embedding =='True' :
             b_size,frames = batch['t0'].shape
             for i in range(0,frames):
                 batch['t0'][:,i] = batch['t0'][:,0]+0.15*i* 300/frames # changer pas coder en dur dans la boucle
