@@ -4,14 +4,21 @@ import pandas as pd
 import cv2
 import matplotlib.pyplot as plt
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> c5b426a3415e5d68823f62d2649f8da31a66a0e4
 def displayvideo(ret,nb_displayed=1,fig_size=(18,4)):
 
     if nb_displayed > ret['Video'].shape[1] :
         print("Impossible display, size format incorrect")
     else :
         fig, axs = plt.subplots(1,nb_displayed,figsize=fig_size)
+<<<<<<< HEAD
         fig.suptitle("Video number:"+str(ret['VideoName'])+" Video Class: "+str(ret['Class'].item()))
+=======
+        fig.suptitle(ret['VideoName'])
+>>>>>>> c5b426a3415e5d68823f62d2649f8da31a66a0e4
 
         #Constant frame display rate
         frame_step = int(ret['Video'].shape[1] / nb_displayed)
