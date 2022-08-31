@@ -19,7 +19,6 @@ if [ ${VIRTUAL_ENV:(-7)} == "classif" ]; then
                                 --criterion_name bce_balanced\
                                 --augmentation hflip vflip randombrightness fill_background\
                                 --framestep 2\
-                                --preload_cache\
                                 -pb
                                 
 else 
