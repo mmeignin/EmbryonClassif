@@ -15,8 +15,8 @@ if [ ${VIRTUAL_ENV:(-7)} == "classif" ]; then
         cd ..
         python3 training.py  \
                                 --data_file transferable_raw\
-                                -bb ResNet18 -he Gru\
-                                --criterion_name bce\
+                                -bb ResNet18 -he ConvPooling\
+                                --criterion_name bce_balanced\
                                 --augmentation hflip vflip randombrightness fill_background\
                                 --framestep 2\
                                 --preload_cache\
