@@ -10,7 +10,7 @@ from visualisation import displayvideo
 hflipper = transforms.RandomHorizontalFlip(p=1)
 vflipper = transforms.RandomVerticalFlip(p=1)
 
-dm = CsvDataModule(data_path='DataSplit/Embryon_RandomSplit_{}.csv', base_dir=os.environ['PWD'], batch_size=1, request=['Image', 'Class','t0'], img_size=[64,64], augmentation=['randombrightness','fill_background'], framestep=100)
+dm = CsvDataModule(data_path='NewDataSplits/Embryon_RandomSplit_{}.csv', base_dir=os.environ['PWD'], batch_size=1, request=['Image', 'Class','t0'], img_size=[64,64], augmentation=['randombrightness','fill_background'], framestep=100)
 
 dm.setup('fit')
 
