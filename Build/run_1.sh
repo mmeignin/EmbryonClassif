@@ -19,7 +19,8 @@ if [ ${VIRTUAL_ENV:(-7)} == "classif" ]; then
                                 --criterion_name bce\
                                 --augmentation hflip vflip randombrightness fill_background\
                                 --framestep 2\
-                                -pb
+                                --preload_cache\
+				-pb
                                 
 else 
         echo "Virtual Environment issue, env name: ${$VIRTUAL_ENV}"
