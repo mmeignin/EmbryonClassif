@@ -108,7 +108,7 @@ class CsvDataset(Dataset) :
     def __getitem__(self, idx):
         ret =  self.getter(idx, self.load)
         if ret is None : return None
-        return self.transform(ret)
+        return ret
 
     @staticmethod
     def cache_key(filename, type, img_size) :
@@ -226,7 +226,7 @@ class CsvDataModule(pl.LightningDataModule):
         return DataLoader(self.dtrain, **self.kwargs_dataloader ,shuffle=self.shuffle_fit)
 
     def val_dataloader(self):
-        return DataLoader(self.dval, **self.kwargs_dataloader, shuffle=self.shuffle_fit)
+        return DataLoader(self.dval, **self.kwargs_dataloader, shuffle=False)
 
     def test_dataloader(self):
         return DataLoader(self.dtest, **self.kwargs_dataloader, shuffle=False)

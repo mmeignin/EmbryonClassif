@@ -10,7 +10,7 @@ from visualisation import displayvideo
 hflipper = transforms.RandomHorizontalFlip(p=1)
 vflipper = transforms.RandomVerticalFlip(p=1)
 
-dm = CsvDataModule(data_path='DataSplit/EmbryonBinaryRaw_RandomSplit_{}.csv', base_dir=os.environ['PWD'], batch_size=1, request=['Image', 'Class','t0'], img_size=[256,256], augmentation=['randombrightness'], framestep=1)
+dm = CsvDataModule(data_path='DataSplit/Embryon_RandomSplit_{}.csv', base_dir=os.environ['PWD'], batch_size=1, request=['Image', 'Class','t0'], img_size=[64,64], augmentation=['randombrightness','fill_background'], framestep=100)
 
 dm.setup('fit')
 
@@ -26,6 +26,6 @@ print(f"Video shape: {ret['Video'].shape}") # VideoName,frames,channels,w,h
 #print(f"max: {torch.max(ret['Video'][0,:])}" , f"min: {torch.min(ret['Video'][0,:])}",f"mean: {torch.mean(ret['Video'][0,:])}")
 
 print(ret)
-fig1=displayvideo(ret,5)
+fig1=displayvideo(ret,3)
 
 plt.show()

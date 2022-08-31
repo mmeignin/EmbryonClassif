@@ -16,7 +16,7 @@ if [ ${VIRTUAL_ENV:(-7)} == "classif" ]; then
         python3 training.py  \
                                 --data_file transferable\
                                 -bb ResNet18 -he Gru\
-                                --criterion_name bce_balanced\
+                                --criterion_name bce\
                                 --augmentation hflip vflip randombrightness fill_background\
                                 --framestep 2\
                                 -pb

@@ -52,7 +52,7 @@ class LitClassificationModel(pl.LightningModule) :
             elif NBClass == 2 :
                 #class_weight = torch.tensor([0.77118644, 1.421875]).to(batch['Class'].device)
                 import numpy as np
-                print(np.unique(batch['Class'].detach().numpy()),batch['Class'].detach().numpy())
+                print(batch['Class'].shape)
                 class_weight = torch.tensor(compute_class_weight(class_weight='balanced',classes=np.unique(batch['Class']),y=batch['Class'].detach().numpy())).to(batch['Class'].device)
                 print(class_weight)
             else :

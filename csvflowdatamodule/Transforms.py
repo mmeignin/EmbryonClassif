@@ -43,8 +43,6 @@ class TrAugmentVideo() :
             for name in augs_names :
                 self.interpret_name(name)
         print("Augmentation:", augmentation)
-        for name in augs_names :
-            self.interpret_name(name)
         self.declare()
 
     def interpret_name(self, name) :
