@@ -15,10 +15,10 @@ if [ ${VIRTUAL_ENV:(-7)} == "classif" ]; then
         cd ..
         python3 training.py  \
                                 --data_file EmbryonBinary_RandomSplit\
-                                -bb ResNet18 -he Lstm\
+                                -bb ResNet18 -he ConvPooling\
                                 --criterion_name bce_balanced\
                                 --augmentation hflip vflip randombrightness fill_background\
-                                --framestep 2\
+                                --framestep 4\
                                 --preload_cache\
 				-pb
                                 
