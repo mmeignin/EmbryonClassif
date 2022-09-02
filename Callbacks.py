@@ -20,7 +20,7 @@ class ResultsLogger(pl.Callback) :
 
     def setup(self, trainer, pl_module, stage) :
         if self.fp is None :
-            self.fp = os.path.join(trainer.log_dir, trainer.logger.name, trainer.logger.experiment.id, 'results.csv')
+            self.fp = os.path.join(trainer.log_dir, trainer.logger.name, trainer.logger.experiment.id, 'result_val.csv')
         print(f'Save results in {self.fp}')
         with open(self.fp, 'w') as f :
             f.write(f'epoch,step_label,file_name,'+','.join(self.keys)+'\n')
