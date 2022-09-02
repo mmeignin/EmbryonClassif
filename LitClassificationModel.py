@@ -6,7 +6,6 @@ import torch
 from ipdb import set_trace
 from argparse import ArgumentParser
 import wandb
-from csvflowdatamodule.utils import NBClass
 from sklearn.utils.class_weight import compute_class_weight
 import numpy as np
 
@@ -22,7 +21,7 @@ from losses.WeightedClassificationError import WeightedClassificationError
 """
 
 class LitClassificationModel(pl.LightningModule) :
-    def __init__(self, criterion_name, **kwargs) :
+    def __init__(self, criterion_name,NBClass, **kwargs) :
         super().__init__()
         self.backbone_model = LitBackbone(**kwargs)
         self.head_model = LitHead(input_feats=self.backbone_model.get_output_feats(kwargs['img_size']), **kwargs)
@@ -116,4 +115,5 @@ class LitClassificationModel(pl.LightningModule) :
         parser = LitBackbone.add_specific_args(parser)
         parser = LitHead.add_specific_args(parser)
         parser.add_argument('--criterion_name', type=str, choices=['bce', 'bce_balanced'], default='bce')
+        parser.add_argument('--NBClass',type=int,choices=[2,8],default=8)
         return parser
