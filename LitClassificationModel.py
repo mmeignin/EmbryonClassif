@@ -30,7 +30,7 @@ class LitClassificationModel(pl.LightningModule) :
 
 
     def configure_optimizers(self):
-        optimizer = torch.optim.Adam(self.parameters(), lr=1e-4)
+        optimizer = torch.optim.Adam(self.parameters(), lr=1e-3)
         print(f'Optimizer : {optimizer}')
         return optimizer
 
