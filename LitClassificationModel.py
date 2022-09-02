@@ -26,7 +26,9 @@ class LitClassificationModel(pl.LightningModule) :
         self.backbone_model = LitBackbone(**kwargs)
         self.head_model = LitHead(input_feats=self.backbone_model.get_output_feats(kwargs['img_size']), **kwargs)
         self.criterion_name = criterion_name
-        
+        self.NBClass = NBClass
+
+
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=1e-4)
         print(f'Optimizer : {optimizer}')
@@ -47,10 +49,10 @@ class LitClassificationModel(pl.LightningModule) :
         if self.criterion_name == 'bce' :
             losses = nn.functional.cross_entropy(batch['Pred'], batch['Class'], reduction='none')
         if self.criterion_name == 'bce_balanced' :
-            if NBClass == 8 :
+            if self.NBClass == 8 :
                 #class_weight = torch.tensor(compute_class_weight(class_weight='balanced',classes=np.unique(batch['Class']),y=batch['Class'].detach().numpy())).to(batch['Class'].device)
                 class_weight = torch.tensor([1.21875,1.17672414,1.1375,1.625,1.1375,0.875,0.89802632,0.58836207]).to(batch['Class'].device)
-            elif NBClass == 2 :
+            elif self.NBClass == 2 :
                 #class_weight = torch.tensor([0.77118644, 1.421875]).to(batch['Class'].device) #Binary viable
                 #class_weight = torch.tensor(compute_class_weight(class_weight='balanced',classes=np.unique(batch['Class']),y=batch['Class'].detach().numpy())).to(batch['Class'].device)
                 class_weight = torch.tensor([1.26388889, 82727273]).to(batch['Class'].device) #transferable
@@ -70,10 +72,10 @@ class LitClassificationModel(pl.LightningModule) :
         evals['preds'] =  a
         evals['accs'] = (a == batch['Class']).to(torch.float)
         evals['Class'] =  batch['Class']
-        if NBClass == 8 and self.criterion_name != 'custom_loss' :
+        if self.NBClass == 8 and self.criterion_name != 'custom_loss' :
             wce = WeightedClassificationError()
             evals['WCE'] = wce.compute(batch['Pred'],batch['Class'],batch['Class'].device)
-        for i in range(NBClass) :
+        for i in range(self.NBClass) :
             evals[f'preds_{i}'] = (a == i).to(torch.float)
       
     def Logging(self, evals, step_label) :
@@ -83,10 +85,10 @@ class LitClassificationModel(pl.LightningModule) :
         bs = evals['losses'].shape[0]
         log = lambda k : self.log(f'{step_label}/{k}', evals[k].mean(), on_epoch=True, on_step=False)
         
-        for k in ['losses', 'accs'] + [f'preds_{i}' for i in range(NBClass)]:
+        for k in ['losses', 'accs'] + [f'preds_{i}' for i in range(self.NBClass)]:
             evals[k] = evals[k].detach()
             log(k)
-        if NBClass == 8:
+        if self.NBClass == 8:
             self.log('WCE custom loss',evals['WCE'].detach(),on_epoch=True, on_step=False)
     
 
