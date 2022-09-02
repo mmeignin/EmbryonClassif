@@ -8,11 +8,12 @@ import torch
 from argparse import ArgumentParser
 from pathlib import Path
 from Callbacks import ResultsLogger
+import json
 
 checkpoint = "results/EmbryonClassif_on_serv/306otnua/checkpoints/last.ckpt"
 pathtosummary=os.getcwd()+"/results/wandb/run-20220901_175828-306otnua/files/wandb-metadata.json"
 
-import json
+
 with open(pathtosummary, 'r') as f:
   data = json.load(f)
 arglist={}

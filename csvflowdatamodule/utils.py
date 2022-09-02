@@ -9,7 +9,7 @@ from natsort import natsorted
 import numpy as np
 
 
-NBClass=8
+NBClass=2
 
 
 def r(x, w=240, h=240) :
