@@ -16,7 +16,7 @@ if [ ${VIRTUAL_ENV:(-7)} == "classif" ]; then
         python3 training.py  \
                                 --data_file Embryon_RS_fixed_val\
                                 -bb ResNet18 -he Gru\
-                                --criterion_name bce_balanced\
+                                --criterion_name bce\
                                 --augmentation hflip vflip randombrightness fill_background\
                                 --framestep 4\
                                 --preload_cache\
