@@ -47,7 +47,5 @@ class ResultsLogger(pl.Callback) :
     def on_test_end(self, trainer, pl_module) :
         self.summary_path = self.fp.replace('.csv', '_summary.tsv')
         dfr = pd.read_csv(self.fp)
-        dfr.groupby(['step_label','epoch']).mean()[['accs','losses']].to_csv(self.summary_path, sep='\t')
-        self.summary_log = dfr.mean()
-        self.summary_log.to_csv(self.summary_path, sep='\t', mode='a', header=False)
+        dfr.groupby(['step_label','epoch']).mean()[['accs','losses']].to_csv(self.summary_path.replace("_.tsv",".csv"), sep='\t')
         print(f'Summary saved at : {self.summary_path}')
