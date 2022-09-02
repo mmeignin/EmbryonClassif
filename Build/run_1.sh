@@ -14,7 +14,7 @@ if [ ${VIRTUAL_ENV:(-7)} == "classif" ]; then
         #pip install -r "$(pwd)/requirements.txt"
         cd ..
         python3 training.py  \
-                                --data_file Embryon_RS_fixed_val\
+                                --data_file transferable_FV\
                                 -bb ResNet18 -he Gru\
                                 --criterion_name bce\
                                 --augmentation hflip vflip randombrightness fill_background\
