@@ -16,12 +16,11 @@ if [ ${VIRTUAL_ENV:(-7)} == "classif" ]; then
         python3 training.py  \
                                 --data_file transferable_FV\
 				--NBClass 2\
-                                -bb ResNet18 -he Lstm\
-                                --criterion_name bce\
+                                -bb SimpleConv -he ConvPooling\
+                                --criterion_name bce_balanced\
                                 --augmentation hflip vflip randombrightness fill_background\
                                 --framestep 4\
 				--preload_cache
-                                
 else 
         echo "Virtual Environment issue, env name: ${$VIRTUAL_ENV}"
 fi
