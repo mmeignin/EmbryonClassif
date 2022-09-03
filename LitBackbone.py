@@ -51,7 +51,7 @@ class LitBackbone(pl.LightningModule) :
         if self.embedding =='True' :
             b_size,frames = batch['t0'].shape
             for i in range(0,frames):
-                batch['t0'][:,i] = batch['t0'][:,0]+0.15*i* 300/frames
+                batch['t0'][:,i] = batch['t0'][:,0]*3600+900*i* 300/frames
             output = (vid_feats + batch['t0'].reshape(b_size,frames,1).to(torch.float))
         else :
             output = vid_feats
