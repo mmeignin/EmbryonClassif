@@ -4,7 +4,7 @@ ipdb==0.13.9
 ipython==8.4.0
 matplotlib==3.5.2
 natsort==8.1.0
-numpy==1.23.1
+numpy==1.21
 pandas==1.4.3
 Pillow==9.2.0
 pytorch_lightning==1.6.5

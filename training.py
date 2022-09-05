@@ -50,8 +50,8 @@ mck = pl.callbacks.ModelCheckpoint(path_save_model+'/checkpoints/',
                                    save_top_k=3)
 
 args.callbacks = [ResultsLogger(), mck]
-args.max_epochs = 120
-args.accumulate_grad_batches=16
+args.max_epochs = 200
+args.accumulate_grad_batches=5
 trainer = pl.Trainer.from_argparse_args(args)
 trainer.logger.log_hyperparams(args)
 

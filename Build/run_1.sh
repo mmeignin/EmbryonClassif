@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#SBATCH --mem=7G
-#SBATCH --cpus-per-task=6
+#SBATCH --mem=50G
+#SBATCH --cpus-per-task=10
 
 #SBATCH -w figuier
 
@@ -14,13 +14,14 @@ if [ ${VIRTUAL_ENV:(-7)} == "classif" ]; then
         #pip install -r "$(pwd)/requirements.txt"
         cd ..
         python3 training.py  \
-                                --data_file transferable_FV\
+                                --data_file Binary_FV\
 				--NBClass 2\
-                                -bb SimpleConv -he ConvPooling\
+                                -bb ResNet18 -he Lstm\
                                 --criterion_name bce_balanced\
                                 --augmentation hflip vflip randombrightness fill_background\
                                 --framestep 4\
 				--preload_cache
+	
 else 
         echo "Virtual Environment issue, env name: ${$VIRTUAL_ENV}"
 fi
