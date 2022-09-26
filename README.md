@@ -17,7 +17,7 @@ You can find Requirements without Version Specifiers and Requirements with Versi
 ## Datasets
 
 You can find some created Datasets in DataSplit and NewDataSplit:<br />
-&nbsp;&nbsp;&nbsp;&nbsp;DataSplit:<br />
+DataSplit:<br />
 - Embryon_RandomSplit : train,test,val : 180, 46, 47 elements , class repartition is the same in all three sets <br />
 - Embryon_RandomSpliRaw : same as the first one but for non-segmented videos <br />
 - Embryon_RawAndSegmented : datasets with same repartition as the previous one but with both non-segmented and segmented videos <br />
