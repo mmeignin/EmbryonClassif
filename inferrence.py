@@ -10,6 +10,10 @@ from pathlib import Path
 from Callbacks import ResultsLogger
 import json
 
+# ------------
+# inferrence test that take the argument from the json files
+# ------------
+
 checkpoint = "results/EmbryonClassif_on_serv/306otnua/checkpoints/last.ckpt"
 pathtosummary=os.getcwd()+"/results/wandb/run-20220901_175828-306otnua/files/wandb-metadata.json"
 

@@ -6,9 +6,12 @@ from Models.backbones.ResNet18 import ResNet18
 from Models.backbones.ResNet34 import ResNet34
 from Models.backbones.Vgg11 import Vgg11
 from Models.backbones.Vit import Vit
-
 from argparse import ArgumentParser
 
+
+# ------------
+# Choosing Head Model from ['SimpleConv', 'ResNet18', 'ResNet34', 'Vgg11','Vit']
+# ------------
 
 class LitBackbone(pl.LightningModule) :
     def __init__(self, backbone,embedding,**kwargs) :
@@ -43,18 +46,20 @@ class LitBackbone(pl.LightningModule) :
         -------
         batch : add field 'Features' ( Nvideos, NFrames, Nfeats)
         """
-    
         b, f, c , w, h = batch['Video'].shape
         input =  rearrange(batch['Video'], 'b f c w h -> (b f) c w h') # (Nvideos*NFrames, channels, w, h)
         features = self.model(input.to(batch['Class'].device)  ) # (Nvideos*NFrames, Nfeats)
         vid_feats = rearrange(features, ' (b f) s -> b f s', b=b , f=f) 
+
+        # Embedding prototype 
         if self.embedding =='True' :
             b_size,frames = batch['t0'].shape
             for i in range(0,frames):
-                batch['t0'][:,i] = batch['t0'][:,0]*3600+900*i* 300/frames
+                batch['t0'][:,i] = batch['t0'][:,0]*3600+900*i*300/frames
             output = (vid_feats + batch['t0'].reshape(b_size,frames,1).to(torch.float))
         else :
             output = vid_feats
+
         return output.to(batch['Class'].device)  
 
     @staticmethod

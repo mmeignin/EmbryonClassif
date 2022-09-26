@@ -4,6 +4,9 @@ import pandas as pd
 import cv2
 import matplotlib.pyplot as plt
 
+# ------------
+# Tool to display the videos
+# ------------
 
 def displayvideo(ret,nb_displayed=1,fig_size=(18,4)):
 

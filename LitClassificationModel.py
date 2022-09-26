@@ -8,8 +8,11 @@ from argparse import ArgumentParser
 import wandb
 from sklearn.utils.class_weight import compute_class_weight
 import numpy as np
-
 from losses.WeightedClassificationError import WeightedClassificationError
+
+# ------------
+# Classification Model with a Backbone-Head architecture, For balanced cross entropy check criterion to ensure that the weights are good
+# ------------
 """
 	A LightningModule organizes your PyTorch code into 6 sections:
 	-Computations (init).
@@ -43,7 +46,7 @@ class LitClassificationModel(pl.LightningModule) :
         return batch
 
     def Criterion(self, batch) :
-        """"wandb_logger = self.logger.experiment
+        """"
         Comput loss for the batch
         """
         if self.criterion_name == 'bce' :
@@ -63,13 +66,14 @@ class LitClassificationModel(pl.LightningModule) :
         """"Args : batch with at least keys
                 'Class'
             Update
-            Evals : 'loss','accs','Class'
+            Evals : 'loss','accs','Class' and 'WCE' when there is 8 class
         """
         evals['loss'] = evals['losses'].mean() # Loss is necessary for backprop in Pytorch Lightning
         a = batch['Pred'].argmax(axis=-1) #(Nvideos, 1)
         evals['preds'] =  a
         evals['accs'] = (a == batch['Class']).to(torch.float)
         evals['Class'] =  batch['Class']
+        ## WeightClassificationError prototype from rRamp challenge
         if self.NBClass == 8 and self.criterion_name != 'custom_loss' :
             wce = WeightedClassificationError()
             evals['WCE'] = wce.compute(batch['Pred'],batch['Class'],batch['Class'].device)

@@ -49,6 +49,10 @@ mck = pl.callbacks.ModelCheckpoint(path_save_model+'/checkpoints/',
                                    mode='min',
                                    save_top_k=3)
 
+# ------------
+# Hyper parameters
+# ------------
+
 args.callbacks = [ResultsLogger(), mck]
 args.max_epochs = 200
 args.accumulate_grad_batches=5

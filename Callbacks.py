@@ -5,12 +5,16 @@ import wandb
 from ipdb import set_trace
 import os
 from pathlib import Path
-import matplotlib.pyplot as plt
 import pandas as pd
-#from PIL import Image
 import numpy as np
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+# ------------
+# Manual result logging 
+# ouput: results.csv file containing all epochs prediction on test and validation and the test prediction
+#        results_summary.csv containing summary evaluation of test
+# ------------
 
 class ResultsLogger(pl.Callback) :
     def __init__(self, keys=['losses', 'accs', 'preds', 'Class'], filepath=None):

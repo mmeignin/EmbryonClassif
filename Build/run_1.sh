@@ -11,7 +11,6 @@ pythonEnv="${app}classif/"
 
 ##install requiremennts for the training
 if [ ${VIRTUAL_ENV:(-7)} == "classif" ]; then 
-        #pip install -r "$(pwd)/requirements.txt"
         cd ..
         python3 training.py  \
                                 --data_file Binary_FV\
@@ -21,12 +20,19 @@ if [ ${VIRTUAL_ENV:(-7)} == "classif" ]; then
                                 --augmentation hflip vflip randombrightness fill_background\
                                 --framestep 4\
 				--preload_cache
+        echo "Training is over !"
 	
 else 
-        echo "Virtual Environment issue, env name: ${$VIRTUAL_ENV}"
+        echo "Environment Name should be classif: ${$VIRTUAL_ENV}"
+        echo "Creating Environment and installing dependency"
+        python3 -m venv pythonEnv
+        pip install -r "$(pwd)/requirements.txt"
+        echo "Environment Name should now be classif: ${$VIRTUAL_ENV}"
+        ##Check missing requirements
+        #pip freeze > virtual_env_requirements.txt
 fi
-##Check missing requirements
-#pip freeze > virtual_env_requirements.txt
+
+
 deactivate
 
 exit 0

@@ -6,6 +6,10 @@ from Models.heads.Gru import Gru
 from Models.heads.ConvPooling import ConvPooling
 from argparse import ArgumentParser
 
+# ------------
+# Choosing Head Model from ['NaiveHead', 'Gru', 'ConvPooling','Lstm']
+# ------------
+
 class LitHead(pl.LightningModule) :
     def __init__(self, input_feats, head, **kwargs) :
         super().__init__()

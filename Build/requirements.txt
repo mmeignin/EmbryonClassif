@@ -1,3 +1,24 @@
+###### Requirements without Version Specifiers ######
+
+# einops
+# flowiz
+# ipdb
+# ipython
+# matplotlib
+# natsort
+# numpy
+# pandas
+# Pillow
+# pytorch_lightning
+# torch
+# torchvision
+# wandb
+# scikit-learn
+# scipy
+# opencv-python
+
+###### Requirements with Version Specifiers ######
+
 einops==0.4.1
 flowiz==2.4.0
 ipdb==0.13.9

@@ -78,7 +78,7 @@ class TrAugmentVideo() :
           ret : dictionnary containing at least "Video"
         Return :
           ret dictionnary containg video with adjusted brightness
-              'Flow' : (Nframes, Channels ,W, H)
+              'Video' : (Nframes, Channels ,W, H)
         """
         fct = torch.rand(1) + 1
         ret['Video'] += 0.5
