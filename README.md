@@ -5,7 +5,7 @@ You got to specify the data directory first in mp4_To_tif.py and then you can fr
 - python3 mp4_To_tif.py 
 * #to do unet prediction
 - python3 unet_videos.py
-* #to fill tbhe unet mas
+* #to fill the unet mask
 - python3 fill_mask.py
 * #To finally do the segmentaiton
 - python3 segmentation.py
