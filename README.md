@@ -17,33 +17,33 @@ You can find Requirements without Version Specifiers and Requirements with Versi
 ## Datasets
 
 You can find some created Datasets in DataSplit and NewDataSplit:<br />
-DataSplit:<br />
-    - Embryon_RandomSplit : train,test,val : 180, 46, 47 elements , class repartition is the same in all three sets <br />
-    -Embryon_RandomSpliRaw : same as the first one but for non-segmented videos <br />
-    -Embryon_RawAndSegmented : datasets with same repartition as the previous one but with both non-segmented and segmented videos <br />
-    -EmbryonBinary_RandomSplit : same repartition but for binary classification , viable classification <br />
-    -EmbryonBinaryRaw_RandomSplit : same as the previous one but for raw videos <br />
-    -transferable : same repartition but for transferable classification <br />
-    -transferable_Raw : same as the previous one but for raw videos <br />
+&nbsp;&nbsp;&nbsp;&nbsp;DataSplit:<br />
+- Embryon_RandomSplit : train,test,val : 180, 46, 47 elements , class repartition is the same in all three sets <br />
+- Embryon_RandomSpliRaw : same as the first one but for non-segmented videos <br />
+- Embryon_RawAndSegmented : datasets with same repartition as the previous one but with both non-segmented and segmented videos <br />
+- EmbryonBinary_RandomSplit : same repartition but for binary classification , viable classification <br />
+- EmbryonBinaryRaw_RandomSplit : same as the previous one but for raw videos <br />
+- transferable : same repartition but for transferable classification <br />
+- transferable_Raw : same as the previous one but for raw videos <br />
 NewDataSplit: <br />
-    -Binary_FV : class repartition is fifty-fifty in validation set otherwise it is equal to data-class repartition, train,test,val : 177,56,40 elements <br />
-    -Embryon_RandomSplit : same as DataSplit/Embryon_RandomSplit but with different random seed <br />
-    -transferable_FV : class repartition is fifty-fifty in validation set otherwise it is equal to data-class repartition, train,test,val : 177,56,40 elements <br />
-    -Embryon_RS_fixed_val :class repartition is even in validation set otherwise it is equal to data-class repartition, train,test,val : 177,56,40 elements <br />
+- Binary_FV : class repartition is fifty-fifty in validation set otherwise it is equal to data-class repartition, train,test,val : 177,56,40 elements <br />
+- Embryon_RandomSplit : same as DataSplit/Embryon_RandomSplit but with different random seed <br />
+- transferable_FV : class repartition is fifty-fifty in validation set otherwise it is equal to data-class repartition, train,test,val : 177,56,40 elements <br />
+- Embryon_RS_fixed_val :class repartition is even in validation set otherwise it is equal to data-class repartition, train,test,val : 177,56,40 elements <br />
 
 
 ## Models
 
 Different Model proposition that can be used for classification:<br />
 features extractor :<br />
-    -ResNet18<br />
-    -ResNet34<br />
-    -SimpleConv<br />
+- ResNet18<br />
+-  ResNet34<br />
+- SimpleConv<br />
 head:<br />
-    -Gru<br />
-    -Lstm<br />
-    -ConvPooling<br />
-    -NaiveHead<br />
+- Gru<br />
+- Lstm<br />
+- ConvPooling<br />
+- NaiveHead<br />
 
 ## Dataloaders
 
