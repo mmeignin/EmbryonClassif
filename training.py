@@ -28,7 +28,7 @@ dm = CsvDataModule(request=['Image', 'Class','t0'], **vars(args))
 
 
 args.save_dir = os.path.join(os.environ['PWD'], 'results/')
-args.logger = WandbLogger(project='EmbryonClassif_on_serv',
+args.logger = WandbLogger(project='EmbryonClassif',
                           save_dir=args.save_dir,
                           log_model=False)
 model.hparams.project_name = args.logger.experiment.project_name()
